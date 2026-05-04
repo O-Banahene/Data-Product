@@ -1,0 +1,10 @@
+create or replace transient table STAGING_MEMBERSHIP as
+select
+  MEMBER_ID,
+  FIRST_NAME,
+  LAST_NAME,
+  DATE_OF_BIRTH,
+  STATUS,
+  BRANCH_ID,
+  CURRENT_TIMESTAMP() as INGESTED_AT
+from RAW_CB_MEMBER;

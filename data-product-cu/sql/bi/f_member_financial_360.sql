@@ -1,0 +1,12 @@
+create or replace view F_MEMBER_FINANCIAL_360 as
+select
+  d.MEMBER_SK,
+  date_trunc('month', t.POSTED_DATE) as MONTH_KEY,
+  sum(t.NET_AMOUNT) as TOTAL_DEPOSIT_NET_AMOUNT,
+  sum(l.OUTSTANDING_BALANCE) as TOTAL_LOAN_BALANCE,
+  sum(c.STATEMENT_BALANCE) as TOTAL_CC_BALANCE
+from FACT_DEPOSIT_TRANSACTION t
+join DIM_MEMBER d on t.MEMBER_SK = d.MEMBER_SK
+left join FACT_LOAN l on d.MEMBER_SK = l.MEMBER_SK
+left join FACT_CC_ACCOUNT c on d.MEMBER_SK = c.MEMBER_SK
+group by 1,2;

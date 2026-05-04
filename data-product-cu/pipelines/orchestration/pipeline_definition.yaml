@@ -1,0 +1,15 @@
+pipeline_name: cu_bi_data_products
+schedule: "0 */4 * * *"
+steps:
+  - name: ingest_membership
+    envs: [dev, test, prod]
+    sql: sql/staging/stg_membership.sql
+  - name: build_dim_member
+    depends_on: [ingest_membership]
+    sql: sql/curated/dim_member.sql
+  - name: build_member_360
+    depends_on: [build_dim_member]
+    sql: sql/bi/f_member_financial_360.sql
+  - name: run_dq
+    depends_on: [build_member_360]
+    test_path: tests/dq
