@@ -1,0 +1,10 @@
+name: test
+snowflake:
+  warehouse: CU_TEST_WH
+  role: CU_TEST_ETL_ROLE
+  database_raw: CU_RAW
+  database_curated: CU_CURATED
+  database_bi: CU_BI
+quality:
+  fail_on_error: true
+  freshness_hours: 6
